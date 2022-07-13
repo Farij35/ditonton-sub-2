@@ -52,7 +52,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
             ),
             ListTile(
               leading: Icon(Icons.tv_rounded),
-              title: Text('Tv Series'),
+              title: Text('TV Series'),
               onTap: () {
                 Navigator.push(
                     context,
@@ -69,7 +69,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.save_alt),
+              leading: Icon(Icons.system_update_tv_rounded),
               title: Text('Watchlist TV Series'),
               onTap: () {
                 Navigator.pushNamed(context, WatchlistTvSeriesPage.ROUTE_NAME);
