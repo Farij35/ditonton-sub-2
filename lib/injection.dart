@@ -154,10 +154,11 @@ void init() {
     ),
   );
 
-  locator.registerLazySingleton<TvSeriesRepository>(() => TvSeriesRepositoryImpl(
-        remoteDataSource: locator(),
-        localDataSource: locator(),
-      ));
+  locator.registerLazySingleton<TvSeriesRepository>(
+    () => TvSeriesRepositoryImpl(
+      remoteDataSource: locator(),
+      localDataSource: locator(),
+    ));
 
   // data sources
   locator.registerLazySingleton<MovieRemoteDataSource>(

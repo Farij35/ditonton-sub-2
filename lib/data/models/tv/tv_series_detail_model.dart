@@ -27,7 +27,7 @@ class TvSeriesDetailResponse extends Equatable {
     required this.voteCount,
   });
 
-  final String backdropPath;
+  final String? backdropPath;
   final List<int> episodeRunTime;
   final List<GenreModel> genres;
   final String homepage;
