@@ -16,6 +16,9 @@ import 'package:core/domain/usecases/get_watchlist_movies.dart';
 import 'package:core/domain/usecases/get_watchlist_status.dart';
 import 'package:core/domain/usecases/remove_watchlist.dart';
 import 'package:core/domain/usecases/save_watchlist.dart';
+import 'package:core/presentation/bloc/movie/movie_detail_bloc.dart';
+import 'package:core/presentation/bloc/movie/movie_recommendation_bloc.dart';
+import 'package:core/presentation/bloc/movie/movie_watchlist_bloc.dart';
 import 'package:search/domain/usecases/search_movies.dart';
 import 'package:core/domain/usecases/tv/get_popular_tv_series_shows.dart';
 import 'package:core/domain/usecases/tv/get_top_rated_tv_series_shows.dart';
@@ -130,6 +133,24 @@ void init() {
   );
   locator.registerFactory(
         () => SearchBlocTvSeries(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+        () => MovieDetailBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+        () => MovieRecommendationBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+        () => MovieWatchlistBloc(
+      locator(),
+      locator(),
+      locator(),
       locator(),
     ),
   );
