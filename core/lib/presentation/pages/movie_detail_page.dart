@@ -46,37 +46,39 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
         return true;
       },
       child: Scaffold(
-        body: BlocBuilder<MovieDetailBloc, MovieDetailState>(
-          builder: (context, state) {
-            if (state is MovieDetailLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is MovieDetailHasData) {
-              final movie = state.result;
-              MovieRecommendationState movieRecommendationState = context.watch<MovieRecommendationBloc>().state;
-              return SafeArea(
-                child: DetailContent(
-                  movie,
-                  movieRecommendationState is MovieRecommendationHasData
-                      ? movieRecommendationState.result
-                      : List.empty(),
-                  addToWatchlistMovies,
-                ),
-              );
-            } else if (state is MovieDetailError) {
-              return Expanded(
-                child: Center(
-                  child: Text(state.message),
-                ),
-              );
-            } else {
-              return Expanded(
-                child: Container(),
-              );
-            }
-          },
-        ),
+        body: SizedBox(
+          child: BlocBuilder<MovieDetailBloc, MovieDetailState>(
+            builder: (context, state) {
+              if (state is MovieDetailLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is MovieDetailHasData) {
+                final movie = state.result;
+                MovieRecommendationState movieRecommendationState = context.watch<MovieRecommendationBloc>().state;
+                return SafeArea(
+                  child: DetailContent(
+                    movie,
+                    movieRecommendationState is MovieRecommendationHasData
+                        ? movieRecommendationState.result
+                        : List.empty(),
+                    addToWatchlistMovies,
+                  ),
+                );
+              } else if (state is MovieDetailError) {
+                return Expanded(
+                  child: Center(
+                    child: Text(state.message),
+                  ),
+                );
+              } else {
+                return Expanded(
+                  child: Container(),
+                );
+              }
+            },
+          ),
+        )
       ),
     );
   }

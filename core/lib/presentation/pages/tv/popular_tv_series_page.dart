@@ -1,7 +1,9 @@
+import 'package:core/presentation/bloc/tv/tv_popular_bloc.dart';
 import 'package:core/presentation/provider/tv/popular_tv_series_notifier.dart';
 import 'package:core/presentation/widgets/tv/tv_series_card_list.dart';
 import 'package:core/utils/state_enum.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class PopularTvSeriesPage extends StatefulWidget {
@@ -16,8 +18,8 @@ class _PopularTvSeriesPageState extends State<PopularTvSeriesPage> {
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<PopularTvSeriesNotifier>(context, listen: false)
-            .fetchPopularTvSeries());
+      context.read<TvPopularBloc>().add(TvPopularHasDataEvent())
+    );
   }
 
   @override
@@ -28,27 +30,31 @@ class _PopularTvSeriesPageState extends State<PopularTvSeriesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<PopularTvSeriesNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (data.state == RequestState.Loaded) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final tv = data.tvShows[index];
-                  return TvSeriesCard(tv);
-                },
-                itemCount: data.tvShows.length,
-              );
-            } else {
-              return Center(
-                key: const Key('error_message'),
-                child: Text(data.message),
-              );
+        child: BlocBuilder<TvPopularBloc, TvPopularState>(
+            builder: (context, state) {
+              if (state is TvPopularLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is TvPopularHasData) {
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    final tv = state.result[index];
+                    return TvSeriesCard(tv);
+                  },
+                );
+              } else if (state is TvPopularError) {
+                return Expanded(
+                  child: Center(
+                    child: Text(state.message),
+                  ),
+                );
+              } else {
+                return Expanded(
+                  child: Container(),
+                );
+              }
             }
-          },
         ),
       ),
     );
