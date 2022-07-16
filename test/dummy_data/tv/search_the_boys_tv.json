@@ -1,0 +1,23 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "backdrop_path": "/muth4OYamXf41G2evdrLEg8d3om.jpg",
+            "genre_ids": [
+                1,
+                2
+            ],
+            "id": 1,
+            "name": "The Boys",
+            "original_language": "en",
+            "original_name": "The Boys",
+            "overview": "overview",
+            "popularity": 1.0,
+            "poster_path": "/stTEycfG9928HYGEISBFaG1ngjM.jpg",
+            "vote_average": 1,
+            "vote_count": 1
+        }
+    ],
+    "total_pages": 3,
+    "total_results": 58
+}
