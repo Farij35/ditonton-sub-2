@@ -19,7 +19,6 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.17.0"
 
 dependencies:
   flutter:
@@ -43,7 +42,7 @@ dependencies:
     path: core
   search:
     path: search
-  flutter_bloc: ^8.0.1
+  flutter_bloc: ^7.0.1
 
 dev_dependencies:
   mockito: ^5.0.8
