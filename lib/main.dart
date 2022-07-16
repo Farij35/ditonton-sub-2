@@ -28,12 +28,15 @@ import 'package:core/presentation/pages/tv/top_rated_tv_series_page.dart';
 import 'package:core/presentation/pages/tv/tv_detail_page.dart';
 import 'package:core/presentation/pages/tv/watchlist_tv_series_page.dart';
 import 'package:core/presentation/pages/watchlist_movies_page.dart';
+import 'package:core/utils/ssl_pinning.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await HttpSSLPinning.init();
   di.init();
   runApp(MyApp());
 }
