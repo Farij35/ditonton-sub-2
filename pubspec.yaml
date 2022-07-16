@@ -43,6 +43,8 @@ dependencies:
   search:
     path: search
   flutter_bloc: ^7.0.1
+  firebase_core: ^1.6.0
+  firebase_crashlytics: ^2.8.5
 
 dev_dependencies:
   mockito: ^5.0.8
