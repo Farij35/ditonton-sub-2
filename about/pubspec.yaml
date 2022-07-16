@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   core:
     path: ../core
+  search:
+    path: ../search
 
 dev_dependencies:
   flutter_test:
