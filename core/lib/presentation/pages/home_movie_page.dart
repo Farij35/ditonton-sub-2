@@ -11,7 +11,7 @@ import 'package:core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:core/utils/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+//import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 class HomeMoviePage extends StatefulWidget {
   @override
@@ -87,7 +87,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
         actions: [
           IconButton(
             onPressed: () {
-              FirebaseCrashlytics.instance.crash();
+              //FirebaseCrashlytics.instance.crash();
               Navigator.pushNamed(context, SEARCH_ROUTE);
             },
             icon: const Icon(Icons.search),
