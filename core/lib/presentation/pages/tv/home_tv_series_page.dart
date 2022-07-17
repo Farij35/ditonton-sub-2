@@ -6,7 +6,6 @@ import 'package:core/presentation/bloc/tv/tv_top_rated_bloc.dart';
 import 'package:core/presentation/pages/home_movie_page.dart';
 import 'package:core/presentation/pages/tv/watchlist_tv_series_page.dart';
 import 'package:core/presentation/pages/watchlist_movies_page.dart';
-import 'package:core/styles/colors.dart';
 import 'package:core/styles/text_styles.dart';
 import 'package:core/utils/constants.dart';
 import 'package:core/utils/routes.dart';
@@ -14,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeTvSeriesPage extends StatefulWidget {
+  const HomeTvSeriesPage({super.key});
+
   @override
   _HomeTvSeriesPageState createState() => _HomeTvSeriesPageState();
 }
@@ -96,87 +97,92 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'On Air',
-                style: kHeading6,
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'On Air',
+                    style: kHeading6,
+                  ),
+                  BlocBuilder<TvOnAirBloc, TvOnAirState>(
+                      builder: (context, state) {
+                        if (state is TvOnAirLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (state is TvOnAirHasData) {
+                          return TvList(state.result);
+                        } else if (state is TvOnAirError) {
+                          return Expanded(
+                            child: Center(
+                              child: Text(state.message),
+                            ),
+                          );
+                        } else {
+                          return Expanded(
+                            child: Container(),
+                          );
+                        }
+                      }),
+                  _buildSubHeading(
+                    title: 'Popular',
+                    onTap: () =>
+                        Navigator.pushNamed(context, POPULAR_TV_ROUTE),
+                  ),
+                  BlocBuilder<TvPopularBloc, TvPopularState>(
+                      builder: (context, state) {
+                        if (state is TvPopularLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (state is TvPopularHasData) {
+                          return TvList(state.result);
+                        } else if (state is TvPopularError) {
+                          return Expanded(
+                            child: Center(
+                              child: Text(state.message),
+                            ),
+                          );
+                        } else {
+                          return Expanded(
+                            child: Container(),
+                          );
+                        }
+                      }),
+                  _buildSubHeading(
+                    title: 'Top Rated',
+                    onTap: () => Navigator.pushNamed(
+                        context, TV_TOP_RATED_ROUTE),
+                  ),
+                  BlocBuilder<TvTopRatedBloc, TvTopRatedState>(
+                      builder: (context, state) {
+                        if (state is TvTopRatedLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (state is TvTopRatedHasData) {
+                          return TvList(state.result);
+                        } else if (state is TvTopRatedError) {
+                          return Expanded(
+                            child: Center(
+                              child: Text(state.message),
+                            ),
+                          );
+                        } else {
+                          return Expanded(
+                            child: Container(),
+                          );
+                        }
+                      }
+                  ),
+                ],
               ),
-              BlocBuilder<TvOnAirBloc, TvOnAirState>(
-                  builder: (context, state) {
-                    if (state is TvOnAirLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (state is TvOnAirHasData) {
-                      return TvList(state.result);
-                    } else if (state is TvOnAirError) {
-                      return Expanded(
-                        child: Center(
-                          child: Text(state.message),
-                        ),
-                      );
-                    } else {
-                      return Expanded(
-                        child: Container(),
-                      );
-                    }
-                  }),
-              _buildSubHeading(
-                title: 'Popular',
-                onTap: () =>
-                    Navigator.pushNamed(context, POPULAR_TV_ROUTE),
-              ),
-              BlocBuilder<TvPopularBloc, TvPopularState>(
-                  builder: (context, state) {
-                    if (state is TvPopularLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (state is TvPopularHasData) {
-                      return TvList(state.result);
-                    } else if (state is TvPopularError) {
-                      return Expanded(
-                        child: Center(
-                          child: Text(state.message),
-                        ),
-                      );
-                    } else {
-                      return Expanded(
-                        child: Container(),
-                      );
-                    }
-                  }),
-              _buildSubHeading(
-                title: 'Top Rated',
-                onTap: () => Navigator.pushNamed(
-                    context, TV_TOP_RATED_ROUTE),
-              ),
-              BlocBuilder<TvTopRatedBloc, TvTopRatedState>(
-                builder: (context, state) {
-                  if (state is TvTopRatedLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (state is TvTopRatedHasData) {
-                    return TvList(state.result);
-                  } else if (state is TvTopRatedError) {
-                    return Expanded(
-                      child: Center(
-                        child: Text(state.message),
-                      ),
-                    );
-                  } else {
-                    return Expanded(
-                      child: Container(),
-                    );
-                  }
-                }
-              ),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );

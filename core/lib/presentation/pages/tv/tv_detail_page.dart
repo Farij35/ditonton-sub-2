@@ -5,14 +5,11 @@ import 'package:core/domain/entities/tv/tv_series_detail.dart';
 import 'package:core/presentation/bloc/tv/tv_detail_bloc.dart';
 import 'package:core/presentation/bloc/tv/tv_recommendation_bloc.dart';
 import 'package:core/presentation/bloc/tv/tv_watchlist_bloc.dart';
-import 'package:core/presentation/provider/tv/tv_series_detail_notifier.dart';
 import 'package:core/styles/colors.dart';
 import 'package:core/styles/text_styles.dart';
-import 'package:core/utils/state_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
 
 class TvSeriesDetailPage extends StatefulWidget {
   static const ROUTE_NAME = '/tv-detail';
@@ -69,15 +66,11 @@ class _TvSeriesDetailPageState extends State<TvSeriesDetailPage> {
                     ),
                   );
                 } else if (state is TvDetailError) {
-                  return Expanded(
-                    child: Center(
-                      child: Text(state.message),
-                    ),
+                  return Center(
+                    child: Text(state.message),
                   );
                 } else {
-                  return Expanded(
-                    child: Container(),
-                  );
+                  return const Center(child: Text(""));
                 }
               },
             ),

@@ -66,15 +66,11 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                   ),
                 );
               } else if (state is MovieDetailError) {
-                return Expanded(
-                  child: Center(
+                return Center(
                     child: Text(state.message),
-                  ),
                 );
               } else {
-                return Expanded(
-                  child: Container(),
-                );
+                return const Center(child: Text(""));
               }
             },
           ),
@@ -272,7 +268,7 @@ class _DetailContentState extends State<DetailContent> {
                                     ),
                                   );
                                 } else {
-                                  return Container();
+                                  return const Center(child: Text(""));
                                 }
                               },
                             ),

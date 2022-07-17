@@ -14,6 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 //import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 class HomeMoviePage extends StatefulWidget {
+  const HomeMoviePage({super.key});
+
   @override
   _HomeMoviePageState createState() => _HomeMoviePageState();
 }
@@ -96,87 +98,92 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Now Playing',
-                style: kHeading6,
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Now Playing',
+                    style: kHeading6,
+                  ),
+                  BlocBuilder<MovieNowPlayingBloc, MovieNowPlayingState>(
+                      builder: (context, state) {
+                        if (state is MovieNowPlayingLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (state is NowPlayingMovieHasData) {
+                          return MovieList(state.result);
+                        } else if (state is MovieNowPlayingError) {
+                          return Expanded(
+                            child: Center(
+                              child: Text(state.message),
+                            ),
+                          );
+                        } else {
+                          return Expanded(
+                            child: Container(),
+                          );
+                        }
+                      }),
+                  _buildSubHeading(
+                    title: 'Popular',
+                    onTap: () =>
+                        Navigator.pushNamed(context, POPULAR_MOVIES_ROUTE),
+                  ),
+                  BlocBuilder<MoviePopularBloc, MoviePopularState>(
+                      builder: (context, state) {
+                        if (state is MoviePopularLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (state is MoviePopularHasData) {
+                          return MovieList(state.result);
+                        } else if (state is MoviePopularError) {
+                          return Expanded(
+                            child: Center(
+                              child: Text(state.message),
+                            ),
+                          );
+                        } else {
+                          return Expanded(
+                            child: Container(),
+                          );
+                        }
+                      }),
+                  _buildSubHeading(
+                    title: 'Top Rated',
+                    onTap: () =>
+                        Navigator.pushNamed(context, TOP_RATED_ROUTE),
+                  ),
+                  BlocBuilder<MovieTopRatedBloc, MovieTopRatedState>(
+                      builder: (context, state) {
+                        if (state is MovieTopRatedLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (state is MovieTopRatedHasData) {
+                          return MovieList(state.result);
+                        } else if (state is MovieTopRatedError) {
+                          return Expanded(
+                            child: Center(
+                              child: Text(state.message),
+                            ),
+                          );
+                        } else {
+                          return Expanded(
+                            child: Container(),
+                          );
+                        }
+                      }
+                  ),
+                ],
               ),
-              BlocBuilder<MovieNowPlayingBloc, MovieNowPlayingState>(
-                builder: (context, state) {
-                if (state is MovieNowPlayingLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state is NowPlayingMovieHasData) {
-                  return MovieList(state.result);
-                } else if (state is MovieNowPlayingError) {
-                  return Expanded(
-                    child: Center(
-                      child: Text(state.message),
-                    ),
-                  );
-                } else {
-                  return Expanded(
-                    child: Container(),
-                  );
-                }
-              }),
-              _buildSubHeading(
-                title: 'Popular',
-                onTap: () =>
-                    Navigator.pushNamed(context, POPULAR_MOVIES_ROUTE),
-              ),
-              BlocBuilder<MoviePopularBloc, MoviePopularState>(
-                  builder: (context, state) {
-                    if (state is MoviePopularLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (state is MoviePopularHasData) {
-                      return MovieList(state.result);
-                    } else if (state is MoviePopularError) {
-                      return Expanded(
-                        child: Center(
-                          child: Text(state.message),
-                        ),
-                      );
-                    } else {
-                      return Expanded(
-                        child: Container(),
-                      );
-                    }
-                  }),
-              _buildSubHeading(
-                title: 'Top Rated',
-                onTap: () =>
-                    Navigator.pushNamed(context, TOP_RATED_ROUTE),
-              ),
-              BlocBuilder<MovieTopRatedBloc, MovieTopRatedState>(
-                builder: (context, state) {
-                  if (state is MovieTopRatedLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (state is MovieTopRatedHasData) {
-                    return MovieList(state.result);
-                  } else if (state is MovieTopRatedError) {
-                    return Expanded(
-                      child: Center(
-                        child: Text(state.message),
-                      ),
-                    );
-                  } else {
-                    return Expanded(
-                      child: Container(),
-                    );
-                  }
-                }
-              ),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
